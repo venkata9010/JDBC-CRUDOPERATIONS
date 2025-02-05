@@ -19,42 +19,29 @@ public class login {
 	private static PreparedStatement pmst ;
   
 	public static void main(String[] args) {
-		
 		try {
-		Scanner scr = new Scanner(System.in);
-        Class.forName(Driver);
+			Class.forName(Driver);
+			conn = DriverManager.getConnection(url, username, password);	        
+			String sql="CREATE DATABASE employee";
 
-		conn = DriverManager.getConnection(url, username, password);
+			pmst=conn.prepareStatement(sql);
+			 int i=pms.executeUpdate();
+	  		    if(i == 0) {
+	  		    	System.out.println("Database created");
+	  		    }
+	  		    else {
+	  		    	System.out.println("Not created");
+	  		    }
 
-		System.out.println("enter email");
-		String username =scr.next();
-        
-		String sql="select*from details where email=? and password=?";
-
-		pmst=conn.prepareStatement(sql);
-		pmst.setString(1, username);
-		pmst.setString(2, password);
-
-		ResultSet rs= pmst.executeQuery();
-
-		if(rs.next()) {
-			
-			System.out.println("login");
-
-		}
-		else {
-			System.out.println("invaild");
-		}
-
-		conn.close();
-		pmst.close();
-		scr.close();
-
+			conn.close();
+			pmst.close();
+			scr.close();	
 		} catch (Exception e) {
-            e.printStackTrace();
-       } 
+			e.printStackTrace();
+			
+		}
+				
           
 	}
 }
 	
-
